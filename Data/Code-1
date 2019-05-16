@@ -1,0 +1,43 @@
+# Import Libraries
+import pandas as pd
+from IPython.display import display
+import matplotlib.pyplot as plt
+import seaborn as sns
+
+# Read CSV File
+fantasy_stats_2019 = pd.read_csv('Data/Fantasy_Stats_2018-19.csv', header=1, index_col='Rk')
+pd.options.display.max_columns = None
+#display(fantasy_stats_2019)
+
+# Get Running Backs
+rb = fantasy_stats_2019[fantasy_stats_2019['FantPos'] == 'RB']
+
+# Get Wide Recievers
+wr = fantasy_stats_2019[fantasy_stats_2019['FantPos'] == 'WR']
+
+# Get Tight Ends
+te = fantasy_stats_2019[fantasy_stats_2019['FantPos'] == 'TE']
+
+# Get Quarterbacks
+qb = fantasy_stats_2019[fantasy_stats_2019['FantPos'] == 'QB']
+
+# Working with Running Backs
+# Find Correlation of Included Stats to Fantasy Points
+rb_corr = rb[['PPR', 'Att.1', 'Yds.1','Y/A','TD.1', 'Tgt', 'Rec', 'Yds.2', 'Y/R', 'TD.2', 'TD.3']].corr()
+display(rb_corr[:1])
+plt.plot('PPR', data=rb_corr, linestyle='none', marker='o')
+plt.ylim(0,1)
+plt.show()
+
+
+# Working with Quarterbacks
+# Find Correlation of Included Stats to Fantasy Points
+# Sliming Down QBs
+#qb = qb[:16]
+qb_corr = qb[['FantPt', 'Yds']].corr()
+#qb_corr = qb[['FantPt', 'Cmp', 'Att', 'Yds', 'TD', 'Int', 'Att.1', 'Yds.1','Y/A','TD.1', 'TD.3']].corr()
+#display(qb)
+display(qb_corr)
+#plt.plot('FantPt', data=qb_corr, linestyle='none', marker='o')
+#plt.ylim(0,1)
+#plt.show()
